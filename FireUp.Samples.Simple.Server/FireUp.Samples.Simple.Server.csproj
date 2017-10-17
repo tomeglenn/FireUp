@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4FFDCEE-8E7C-42A4-BD23-7875C38866D7}</ProjectGuid>
+    <ProjectGuid>{A5B8A884-D77D-4158-A216-FD05083C465C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FireUp.Samples.SimpleClient</RootNamespace>
-    <AssemblyName>FireUp.Samples.SimpleClient</AssemblyName>
+    <RootNamespace>FireUp.Samples.Simple.Server</RootNamespace>
+    <AssemblyName>FireUp.Samples.Simple.Server</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FireUp.Samples.SimpleServer")]
+[assembly: AssemblyTitle("FireUp.Samples.Simple.Server")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FireUp.Samples.SimpleServer")]
+[assembly: AssemblyProduct("FireUp.Samples.Simple.Server")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4d2948a5-623d-4c37-80f6-ba6548264b7d")]
+[assembly: Guid("a5b8a884-d77d-4158-a216-fd05083c465c")]
 
 // Version information for an assembly consists of the following four values:
 //

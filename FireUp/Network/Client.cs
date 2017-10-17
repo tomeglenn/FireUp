@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using FireUp.Config;
 using FireUp.Extensions;
 
@@ -10,13 +11,17 @@ namespace FireUp.Network
     public class Client : IClient
     {
         public bool Connected { get; private set; }
+        public ClientConfiguration Config { get; }
 
         private readonly UdpClient connection;
-        private IPEndPoint endpoint;
+        private UdpConnectedClient server;
+        private Timer timeoutTimer;
 
-        public Client(string host, int port)
+        public Client(string host, int port, ClientConfiguration config = null)
         {
-            endpoint = new IPEndPoint(ParseHost(host), port);
+            Config = config ?? new ClientConfiguration();
+
+            server = new UdpConnectedClient(new IPEndPoint(ParseHost(host), port));
             connection = new UdpClient();
         }
 
@@ -24,10 +29,12 @@ namespace FireUp.Network
         {
             Send(ProtocolConstants.ClientHandshake);
             BeginReceive();
+            StartTimeoutTimer();
         }
 
         public void Disconnect()
         {
+            StopTimeoutTimer();
             Send(ProtocolConstants.ClientDisconnect);
             EndConnection();
         }
@@ -35,7 +42,26 @@ namespace FireUp.Network
         public void Send(string message)
         {
             var data = message.ToUtf8Bytes();
-            connection.Send(data, data.Length, endpoint);
+            connection.Send(data, data.Length, server.Endpoint);
+        }
+
+        private void StartTimeoutTimer()
+        {
+            timeoutTimer = new Timer(OnTimeoutInterval, null, TimeSpan.FromSeconds(Config.ServerTimeout), TimeSpan.FromSeconds(Config.ServerTimeout));
+        }
+
+        private void OnTimeoutInterval(object state)
+        {
+            if (server.HasTimedOut(Config.ServerTimeout))
+            {
+                Console.WriteLine("Connection with the server has timed out");
+                Disconnect();
+            }
+        }
+
+        private void StopTimeoutTimer()
+        {
+            timeoutTimer.Dispose();
         }
 
         private void BeginReceive()
@@ -55,7 +81,7 @@ namespace FireUp.Network
         {
             try
             {
-                endpoint = null;
+                IPEndPoint endpoint = null;
                 var data = connection.EndReceive(asyncResult, ref endpoint);
 
                 HandleMessage(data.ToUtf8String());
@@ -111,22 +137,22 @@ namespace FireUp.Network
             return IPAddress.Parse(host);
         }
 
-        protected void OnConnect()
+        protected virtual void OnConnect()
         {
             Console.WriteLine("Connected to server");
         }
 
-        protected void OnDisconnect()
+        protected virtual void OnDisconnect()
         {
             Console.WriteLine("Disconnected from server");
         }
 
-        protected void OnMessageReceived(string message)
+        protected virtual void OnMessageReceived(string message)
         {
             Console.WriteLine($"Message received: {message}");
         }
 
-        protected void OnServerPingReceived()
+        protected virtual void OnServerPingReceived()
         {
             Console.WriteLine("Server Ping Received");
         }

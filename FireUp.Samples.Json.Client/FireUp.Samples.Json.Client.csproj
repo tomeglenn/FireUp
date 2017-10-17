@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4D2948A5-623D-4C37-80F6-BA6548264B7D}</ProjectGuid>
+    <ProjectGuid>{F0982F73-069F-4654-A828-A308DB453D01}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FireUp.Samples.SimpleServer</RootNamespace>
-    <AssemblyName>FireUp.Samples.SimpleServer</AssemblyName>
+    <RootNamespace>FireUp.Samples.Json.Client</RootNamespace>
+    <AssemblyName>FireUp.Samples.Json.Client</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,12 +44,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FireUp.Samples.Json.Core\FireUp.Samples.Json.Core.csproj">
+      <Project>{43389a45-58ff-4ebd-9aa7-fb2b2d498d49}</Project>
+      <Name>FireUp.Samples.Json.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FireUp\FireUp.csproj">
-      <Project>{e402b9b0-48f8-407f-bf99-d88261740a64}</Project>
+      <Project>{E402B9B0-48F8-407F-BF99-D88261740A64}</Project>
       <Name>FireUp</Name>
     </ProjectReference>
   </ItemGroup>

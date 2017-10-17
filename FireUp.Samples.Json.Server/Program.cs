@@ -1,13 +1,12 @@
 ﻿using System;
-using FireUp.Network;
 
-namespace FireUp.Samples.SimpleServer
+namespace FireUp.Samples.Json.Server
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var server = new Server(51337);
+            var server = new JsonServer(51337);
             server.Start();
 
             Console.WriteLine("Press any key to exit");

@@ -19,6 +19,11 @@ namespace FireUp.Network
             LastMessageReceived = DateTime.UtcNow;
         }
 
+        public bool HasTimedOut(int minimumIntervalInSeconds)
+        {
+            return DateTime.UtcNow - LastMessageReceived >= TimeSpan.FromSeconds(minimumIntervalInSeconds);
+        }
+
         public override string ToString()
         {
             return $"{Endpoint.Address}:{Endpoint.Port}";

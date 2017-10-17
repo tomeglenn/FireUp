@@ -77,7 +77,7 @@ namespace FireUp.Network
 
         private void OnPingInterval(object state)
         {
-            var timedOutClients = clients.Where(x => DateTime.UtcNow - x.LastMessageReceived >= TimeSpan.FromSeconds(Config.ClientTimeout)).ToList();
+            var timedOutClients = clients.Where(x => x.HasTimedOut(Config.ClientTimeout)).ToList();
             foreach (var client in timedOutClients)
             {
                 DisconnectClient(client);
@@ -93,15 +93,22 @@ namespace FireUp.Network
 
         private void OnReceive(IAsyncResult asyncResult)
         {
-            IPEndPoint endpoint = null;
+            try
+            {
+                IPEndPoint endpoint = null;
 
-            var data = connection.EndReceive(asyncResult, ref endpoint);
-            var message = data.ToUtf8String();
+                var data = connection.EndReceive(asyncResult, ref endpoint);
+                var message = data.ToUtf8String();
 
-            var client = AddOrGetClient(endpoint);
-            HandleMessage(client, message);
+                var client = AddOrGetClient(endpoint);
 
-            BeginReceive();
+                HandleMessage(client, message);
+                BeginReceive();
+            }
+            catch (SocketException)
+            {
+                BeginReceive();
+            }
         }
 
         private UdpConnectedClient AddOrGetClient(IPEndPoint endpoint)
@@ -126,6 +133,7 @@ namespace FireUp.Network
             }
 
             Send(ProtocolConstants.ServerDisconnect, client);
+            OnClientDisconnected(client);
         }
 
         private void HandleMessage(UdpConnectedClient client, string message)

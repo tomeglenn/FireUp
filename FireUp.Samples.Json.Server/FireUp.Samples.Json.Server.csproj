@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E402B9B0-48F8-407F-BF99-D88261740A64}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{64F8E886-3873-4040-BD89-C3382FE77BA3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FireUp</RootNamespace>
-    <AssemblyName>FireUp</AssemblyName>
+    <RootNamespace>FireUp.Samples.Json.Server</RootNamespace>
+    <AssemblyName>FireUp.Samples.Json.Server</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,17 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\ClientConfiguration.cs" />
-    <Compile Include="Config\ProtocolConstants.cs" />
-    <Compile Include="Config\ServerConfiguration.cs" />
-    <Compile Include="Extensions\ByteArrayExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Network\Client.cs" />
-    <Compile Include="Network\IClient.cs" />
-    <Compile Include="Network\IServer.cs" />
-    <Compile Include="Network\Server.cs" />
-    <Compile Include="Network\UdpConnectedClient.cs" />
+    <Compile Include="JsonServer.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FireUp.Samples.Json.Core\FireUp.Samples.Json.Core.csproj">
+      <Project>{43389a45-58ff-4ebd-9aa7-fb2b2d498d49}</Project>
+      <Name>FireUp.Samples.Json.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FireUp\FireUp.csproj">
+      <Project>{e402b9b0-48f8-407f-bf99-d88261740a64}</Project>
+      <Name>FireUp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,13 +1,12 @@
 ﻿using System;
-using FireUp.Network;
 
-namespace FireUp.Samples.SimpleClient
+namespace FireUp.Samples.Simple.Client
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var client = new Client("localhost", 51337);
+            var client = new Network.Client("localhost", 51337);
             client.Connect();
 
             Console.WriteLine("Type 'exit' to exit");
